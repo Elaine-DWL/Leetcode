@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1538185168 source:c:\users\elaine\desktop\À¢Ã‚\shuati\leetcode_026_remove duplicates from sorted array\026\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+
