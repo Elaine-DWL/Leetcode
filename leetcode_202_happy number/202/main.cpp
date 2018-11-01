@@ -51,6 +51,9 @@ public:
 };
 int main()
 {
+    int n;
+    cin >> n;
+    int x[n];
     cout << "Hello world!" << endl;
     return 0;
 }
