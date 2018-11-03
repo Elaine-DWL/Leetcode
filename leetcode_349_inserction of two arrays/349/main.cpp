@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int, int> mp;
+        vector<int> res;
+        for(int num:nums1) mp[num]++;
+        for(int num:nums2){
+            if(mp.count(num)==1 && mp[num]>0){
+                res.push_back(num);
+                mp[num] = -1;
+            } 
+        }
+        return res;
+    }
+};
+// 方法2
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        set<int> s(nums1.begin(), nums1.end());
+        vector<int> res;
+        for(int num:nums2){
+            if(s.erase(num))
+                res.push_back(num);
+        }
+        return res;
+    }
+};
+int main()
+{
+    cout << "Hello world!" << endl;
+    return 0;
+}
