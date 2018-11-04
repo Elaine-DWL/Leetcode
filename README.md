@@ -213,3 +213,66 @@ public:
 };
 ```
 
+## 409. 最长回文串【哈希】
+
+**题意**
+
+输入一个由小写或大写字母组成的字符串，输出由这些字符组成的最长回文串的长度。
+
+**解法**
+
+对于原来每个字符串中的每个字符，如果该字符个数为偶数，则可以全部用来构建回文串，如果该字符个数为奇数，则该数量减去一个，用来构建回文串。最后加入一个奇数字符来构成回文串。
+
+```
+Input:
+"abbbccccdd"
+
+Output:
+9(bbbccccdd或abbccccdd)
+```
+
+* 思路一
+
+先为字符串构建哈希表，用sum=0表示回文串的初始长度。然后遍历哈希表，如果值是偶数，则把该值加入到sum，如果是奇数，则把该值-1加入到sum中。最后，如果出现过奇数的话，返回sum+1，否则返回sum。
+
+## 438. 字符串中所有的变位词【哈希、滑动窗口】
+
+**题意**
+
+输入一个字符串s和一个非空的字符串p，在s中找出所有p的变位词(anagram)的起始下标。
+
+字符串p的变位词（anagram）指的是字符长度和内容和p一样但内部字符顺序不一样的字符串。比如说"abc", 
+"bca", "cba"都是“acb”的谜。
+
+```
+Input:
+s: "cbaebabacd" p: "abc"
+Output:
+[0, 6]
+Explanation:
+The substring with start index = 0 is "cba", which is an anagram of "abc".
+The substring with start index = 6 is "bac", which is an anagram of "abc".
+
+Input:
+s: "abab" p: "ab"
+Output:
+[0, 1, 2]
+Explanation:
+The substring with start index = 0 is "ab", which is an anagram of "ab".
+The substring with start index = 1 is "ba", which is an anagram of "ab".
+The substring with start index = 2 is "ab", which is an anagram of "ab".
+```
+
+**解法**
+
+* 思路一
+
+算是暴力的解法吧。时间复杂度是O(n^2)。先构建p的哈希表。然后用大小等于p的滑动窗口在s上滑动，对每个窗口内的子字符串，对照哈希表，如果该窗口内各个字符的相应个数和p的相同，则说明该窗口内的子字符串是p的变位词。
+
+* 思路二
+
+在思路一上进行改进，用两个哈希表，分别记录p中字符个数，和s中前p.size()个字串的字符个数，然后对这两个哈希表进行比较，如果相同的话，则将下标0放入结果res中。然后遍历s中剩余的字符，每次右边新加入一个字符，然后去掉左边的一个旧的字符，每次再比较两个哈希表是否相同即可。
+
+* 思路三（还不懂）
+
+[别人的解法](https://www.cnblogs.com/grandyang/p/6014408.html)
