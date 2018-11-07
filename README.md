@@ -440,3 +440,18 @@ Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 
 参见[discuss区](https://leetcode.com/problems/set-mismatch/discuss/105513/XOR-one-pass)
 
+## 705. 设计哈希集合
+
+**题意**
+
+设计一个哈希集合结构，不使用语言的内置哈希库函数。所有值得范围是[0, 1000000].
+
+**解法**
+
+* 解法一
+
+用vector<int>，然后每次需要操作数据得时候先用find()贩毒案该数据是否存在。
+
+* 解法二
+
+用bool a[i]=true/false判断i是否在哈希表内，初始化a得大小为1000000。相比解法一，该解法是用空间换时间
