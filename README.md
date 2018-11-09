@@ -424,7 +424,7 @@ Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 
 先为其中一个数组构建好哈希表，键值是元素所在位置的下标。然后在为另一个数组构建哈希表的过程中判断当前元素是否在之前的数组中出现过，是的话，更新下标和的最小值min_length。然后随便遍历一个数组，判断元素是否在两个数组中都出现且键值之和等于min_length，加入结果容器中。
 
-## 645. 集合中的错误
+## 645. 集合中的错误【哈希】
 
 **题意**
 
@@ -440,7 +440,7 @@ Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 
 参见[discuss区](https://leetcode.com/problems/set-mismatch/discuss/105513/XOR-one-pass)
 
-## 705. 设计哈希集合
+## 705. 设计哈希集合【哈希】
 
 **题意**
 
@@ -448,15 +448,15 @@ Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 
 **解法**
 
-* 解法一
+* 思路一
 
 用vector<int>，然后每次需要操作数据得时候先用find()贩毒案该数据是否存在。
 
-* 解法二
+* 思路二
 
 用bool a[i]=true/false判断i是否在哈希表内，初始化a得大小为1000001。相比解法一，该解法是用空间换时间
 
-## 706. 设计哈希表
+## 706. 设计哈希表【哈希】
 
 **题意**
 
@@ -464,7 +464,7 @@ Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 
 **解法**
 
-思路一：
+* 思路一
 
 直接使用int a[1000001]来建立哈希表，初始化所有的值为-1.
 
@@ -476,3 +476,75 @@ Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 
 **解法**
 
+
+
+## 141. 判断链表是否含环【链表】
+
+**题意**
+
+判断一个链表是否含环。
+
+**解法**
+
+* 思路一
+
+Floyd判圈算法，用两个指针，一个fast每次走两步，一个slow每次走一步，同时从链表头结点出发，如果某一时刻相遇了，则说明链表中含环，如果fast或fast->next为NULL，说明链表无环。
+
+## 160. 链表的交点【链表】【哈希】
+
+**题意**
+
+找出两个单链表的交点。如下所示，返回指向c1的指针。没有交点则返回null， 要求时间复杂度是O(n)，空间复杂度是O(1)。
+
+```
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗            
+B:     b1 → b2 → b3
+```
+
+**解法**
+
+* 思路一
+
+时间O(m+n)，空间O(1)
+
+先分别从headA和headB开始遍历链表，计算遍历的长度len1和len2。
+
+如果len1>len2，则让headA先走len1-len2步。判断headA和heaB是否相等，相等的话直接返回headA。否则headA和headB同时走，每走一步判断是否相等，是的话返回相交节点。如果都走到了链表最后，则说明没有交点。
+
+len2>len1时的做法相似。
+
+len2=len1时，则直接headA和headB同时走就行了。
+
+* 思路二
+
+时间O(m+n)，空间O(n)或O(m)
+
+可以考虑借助哈希表来实现。首先遍历headA，为每个指针(地址)建立哈希表，然后遍历headB中每一个指针，比对哈希表。
+
+* 思路三
+
+```cpp
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    ListNode *cur1 = headA, *cur2 = headB;
+    while(cur1 != cur2){
+        cur1 = cur1?cur1->next:headB;
+        cur2 = cur2?cur2->next:headA;
+    }
+    return cur1;
+}
+```
+
+## 203. 移除链表中的元素
+
+**题意**
+
+移除链表中所有值为val的元素。
+
+**解法**
+
+* 思路一
+
+直接遍历链表，判断。
