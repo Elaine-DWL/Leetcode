@@ -656,3 +656,78 @@ public:
 
 感觉是一种贪心的思想，用f(i)表示，当第i个位置是最后一家店时，所能抢到的最多财产数量；nums[i]表示第i家店里的财产数量。贪心的思想就是，尽可能抱枕f(i)最大。$f(i)=max(f(i-1), f(i-2)+nums(i)$
 
+## 303. 范围总和查询-不可变的【哈希】【动态规划】
+
+**题意**
+
+给一个整数数组，找出下标i和下标j之间的元素的总和。
+
+```
+Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+```
+
+注意：
+
+可以认为数组是不变的；
+
+会对sumRange()函数进行多次调用。
+
+**解法**
+
+* 思路一
+
+```cpp
+class NumArray {
+public:
+    NumArray(vector<int> nums) {
+        
+    }
+    
+    int sumRange(int i, int j) {
+        
+    }
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * int param_1 = obj.sumRange(i,j);
+ */
+```
+
+leetcode里面自带的IDE预先输入了上面的代码，不是刚开始不是很懂怎么出来了一个构造函数，然后就按初始思路下了下面的代码，就是直接用循环来计算下标i和j之间元素的总和。
+
+```cpp
+class NumArray {
+public:
+    vector<int> nums;
+    NumArray(vector<int> nums) {
+        this->nums = nums;
+    }
+    
+    int sumRange(int i, int j) {
+        if(i<0 || j>nums.size()-1) return 0;
+        int sum=0;
+        for(int k=i; k<=j; k++){
+            sum += nums[k];
+        }
+        return sum;
+    }
+};
+```
+
+submit以后，居然beat 1.46%....醉了。
+
+还是要好好理解题意QAQ
+
+* 思路二
+
+现在重新对问题分析，题目的意思大概是，会调用一次构造函数生成数组，然后在**一个测试用例中**会多次调用求和函数sumRange()。按照思路一，每次调用sunRange()都会进行O(n)的复杂度来求和，导致冗余计算。
+
+为什么不在构造函数中添加哈希表构建。用f[n]记录前n个数的和，那么求nums[i]~nums[j]之间的和，可以用f[j]-f[i]来计算。
+
+提交显示，beat 86.03%。
