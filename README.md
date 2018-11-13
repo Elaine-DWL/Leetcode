@@ -731,3 +731,26 @@ submit以后，居然beat 1.46%....醉了。
 为什么不在构造函数中添加哈希表构建。用f[n]记录前n个数的和，那么求nums[i]~nums[j]之间的和，可以用f[j]-f[i]来计算。
 
 提交显示，beat 86.03%。
+
+## 003. 最长无重复子串【哈希】【滑动窗口】
+
+**题意**
+
+输入一个字符，返回它的最长无重复子串的长度。
+
+注意：最长子序列和最长子串的区别。
+
+```
+Input: "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3. 
+             Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+```
+
+**解法**
+
+* 思路一
+
+先在草稿纸上想一想，如果是手工来找，要怎么找呢。比如说查找序列`abcadcabb`的最长无重复子串，从第一个字符串开始，往后看第二个字符b，`ab`是无重复的，再看c，`abc`也没有重复，接下来到字符a，`abca`中字符a重复了，然后目前的基字符串就编程了`bca`，接着看后面的字符...
+
+上述做法抽象一下，其实就是用一个滑动窗口在字符串上进行滑动，用哈希表hash记录字符最后出现的位置，可以用left、right指针分别表示滑动窗口的两端，right不断向右扩张，每次判断hash[right]的值是否在滑动窗口中(也就是判断新的字符是否在当前子串中出现过)，如果是的话，改变left指针的值，`left=hash[right]+1`，在这个过程中滑动窗口的长度就是无重复子串长度，不断更新滑动窗口长度的最大值。
