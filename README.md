@@ -754,3 +754,73 @@ Explanation: The answer is "wke", with the length of 3.
 先在草稿纸上想一想，如果是手工来找，要怎么找呢。比如说查找序列`abcadcabb`的最长无重复子串，从第一个字符串开始，往后看第二个字符b，`ab`是无重复的，再看c，`abc`也没有重复，接下来到字符a，`abca`中字符a重复了，然后目前的基字符串就编程了`bca`，接着看后面的字符...
 
 上述做法抽象一下，其实就是用一个滑动窗口在字符串上进行滑动，用哈希表hash记录字符最后出现的位置，可以用left、right指针分别表示滑动窗口的两端，right不断向右扩张，每次判断hash[right]的值是否在滑动窗口中(也就是判断新的字符是否在当前子串中出现过)，如果是的话，改变left指针的值，`left=hash[right]+1`，在这个过程中滑动窗口的长度就是无重复子串长度，不断更新滑动窗口长度的最大值。
+
+## 009. 回文数的判断
+
+**题意**
+
+判断一个整数是否为回文数。
+
+```
+Input: -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+Input: 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+```
+
+**解法**
+
+* 思路一
+
+根据题目给出的例子，首先可以知道，负数绝对不是满足要求的回文数。[0, 9]之间的整数肯定是回文数。
+
+用取余、取整的方法，将整数各个位上的数字抽取出来放入一个数组中。用两个指针(一头一尾)，通向遍历数组，当发现对应两个位置的数字不相等时，则不是回文数，返回false。
+
+时间复杂度和原来整数的位数n有关。O(n+n/2)
+
+* 思路二
+
+用取余的方法抽取各个位置上数字的过程中，首先取出来的是低位的数字，每一次取新数字的时候，把res（初始为0）*10，再加上这个新数字。最后判断得到的逆序数res和原数字是否相等。
+
+时间复杂仍然和整数的位数n有关。O(n)
+
+```cpp
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x<0) return false;
+        if(x/10 == 0) return true;
+        vector<int> tmp;
+        int y=x, res=0;
+        while(y){
+            res = res*10 + y%10;
+            y = y/10;
+        }
+        return res==x;
+    }
+};
+```
+
+* 思路三
+
+思路二中，是等所有数字逆序完来比较结果的，其实可以在逆序一半的时候就进行判断，比如说判断`123321`是否是回文数，可以在对后面三位数进行逆序后，判断得到的`123`和剩下的`123`比较是否相等。
+
+```cpp
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x<0|| (x!=0 &&x%10==0)) return false;
+        int sum=0;
+        while(x>sum)
+        {
+            sum = sum*10+x%10;
+            x = x/10;
+        }
+        return (x==sum)||(x==sum/10);
+    }
+};
+```
+
