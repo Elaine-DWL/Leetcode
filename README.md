@@ -824,3 +824,21 @@ public:
 };
 ```
 
+## 069. 求$\sqrt{x}$的近似值
+
+**题意**
+
+输入x，返回$\sqrt{x}$的近似值(如果是小数的话，返回整数部分)。不能调用库函数。
+
+```
+Input: 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since 
+             the decimal part is truncated, 2 is returned.
+```
+
+**解法**
+
+* 思路一
+
+二分搜索。
