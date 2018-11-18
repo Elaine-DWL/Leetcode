@@ -130,11 +130,15 @@ bool wordPattern(string pattern, string str){
 
 其实本质上和思路一差不多。首先，构造用nums1构造一个set，然后遍历nums2，如果能在set中找到当前元素，则将该元素放到要返回的vector中，并且在set中删除该元素。
 
+* 思路三【set_intersection】
+
+用STL里面的`set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(), inserter(res, res.begin())`，返回的是set。
+
 ## 350. 数组的交集 2【哈希】
 
 **题意**
 
-前一题(349)中，返回的数组交集元素只能出现依次。而本题中，如果某个元素同时在两个数组中出现的话，那么在交集中，它出现的次数也应该尽可能多。
+前一题(349)中，返回的数组交集元素只能出现1次。而本题中，如果某个元素同时在两个数组中出现的话，那么在交集中，它出现的次数也应该尽可能多。
 
 对于 Input: nums1 = [1,2,2,1], nums2 = [2,2]
 
