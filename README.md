@@ -927,3 +927,55 @@ Because the 4th row is incomplete, we return 3.
 * 思路二
 
 二分查找，小心溢出。
+
+## 475. 加热器
+
+**题意**
+
+冬天来了！你的首要任务就是涉及一个标准加热器的固定制热半径，使得所有的房间都温暖。
+
+现在，你知道所有房间和加热器的一维坐标位置，找出加热器的最小半径，使得所有房间都能被加热器覆盖。
+
+输入两个一维矩阵，分别是房间和加热器的位置，输出加热器的最小半径。
+
+注意：
+
+1. 房间和加热器的数量都是非负的，并且不超过25000；
+2. 房间和加热器的位置都是非负的，并且不超过$10^9$；
+3. 只要某个房间在加热器的半径范围内，那该房间可以被温暖；
+4. 所有的加热器都满足一个半径标准，且它们的制热半径是一样的。
+
+```
+Input: [1,2,3,4],[1,4]
+Output: 1
+Explanation: The two heater was placed in the position 1 and 4. We need to use radius 1 standard, then all the houses can be warmed.
+```
+
+**解法**
+
+* 思路一
+
+首先要把两个数组都按照从小到大的顺序排好序，我们的目的，就是希望houses中的每个元素都被cover。
+
+遍历houses数组，对houses中每个元素，在heaters中找到能包含这个数字的左右范围，然后看左右两边谁近。如果某个house位置比heaters中的最小数字海啸，那么肯定用最小的heater去cover它，反之，如果比最大的数字还要大，那就用最大的heater去cover。对于每个house算出的半径，我们最后取其中的最大值。
+
+通过上面的分析，可以写代码了。在heaters中两个数一组进行检查，如果后面一个数和当前house位置差的绝对值小于前面一个数和当前house位置差的绝对值，那么我们继续遍历下一组heater。跳出循环的条件是遍历到heater的最后一个数，或者上面的小于等式不成立，此时heater中的值和当前house位置的差的绝对值就是能cover当前house的最小半径。每次更新结果res。
+
+```cpp
+class Solution {
+public:
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+        sort(houses.begin(), houses.end());
+        sort(heaters.begin(), heaters.end());
+        int n = heaters.size();
+        int res = 0;
+        for(int i=0; i<houses.size(); i++){// 遍历每个house
+            int j=0;
+            while(j<n-1 && abs(heaters[j]-houses[i])>=abs(heaters[j+1]-houses[i])) j++;
+            res = max(res, abs(heaters[j]-houses[i]));
+        }
+        return res;
+    }
+};
+```
+
