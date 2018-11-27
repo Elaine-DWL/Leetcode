@@ -1043,5 +1043,76 @@ http://www.cnblogs.com/grandyang/p/4125588.html
 
 在每次*10之前判断。具体见代码。
 
+## 006. ZigZag 转换【找规律】
+
+**题意**
+
+将一个字符串，按z字形每个字符展开，然后按行输出新的字符串。`numRows`表示展开的行数
+
+```
+Input: s = "PAYPALISHIRING", numRows = 4
+Output: "PINALSIGYAHRPI" 
+Explanation:
+
+P     I    N
+A   L S  I G
+Y A   H R
+P     I
+```
+
+**解法**
+
+我一开始的思路是，推导出展开后的zigzag的列数col，然后遍历`numRows*col`大小的矩阵来将原来的字符填入矩阵中。其实这种做法非常麻烦。首先会浪费很多的空间，因为如果按z字形填入矩阵的话，实际是会有很多空的位置没有字符的。其次，如果按z字形填好了，再遍历矩阵取出这些字符也很耗时。
+
+* 思路一
+
+`vector<vector<char>> res(numRows)`，遍历字符串中的每个字符，依次将字符放入到其所属行的vector的末尾。注意numRows=0和1的情况。
+
+* 思路二
+
+在[discuss区](https://leetcode.com/problems/zigzag-conversion/discuss/3435/If-you-are-confused-with-zigzag-patterncome-and-see!)看到的.
+
+
+```
+/*n=numRows
+Δ=2n-2    1---------[step1]-----------2n-1---------[step1]---------4n-3
+Δ=        2                     2n-2  2n                    4n-4   4n-2
+Δ=        3               2n-3        2n+1              4n-5       .
+Δ=        .           .               .               .            .
+Δ=        .       n+2                 .           3n               .
+Δ=        n-1 n+1 ----[step2]------   3n-3    3n-1                 5n-5
+Δ=2n-2    n                           3n-2                         5n-4
+*/
+```
+先推导一下zigzag的规律如上。
+
+```cpp
+class Solution{
+public:
+	string convert(string  s, int numRows){
+		string result = "";
+		if(numRows==1) return s;
+		int step1, step2;
+		int len = s.size();
+		for(int i=0; i<numRows; i++){
+			step1 = (numRows-i-1)*2;
+			step2 = i*2;
+			int pos = i;
+			if(pos < len) result += s.at(pos);
+			while(1){
+				pos += step1;
+				if(pos >= len) break;
+				if(step1) result += s.at(pos);
+				
+				pos += step2;
+				if(pos >= len) break;
+				if(step2) result += s.at(pos);
+			}
+		}
+		return result;
+	}
+};
+```
+
 
 
