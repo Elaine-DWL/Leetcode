@@ -1477,7 +1477,26 @@ public:
 };
 ```
 
+## 061. 旋转链表【递归/链表/2个指针】
 
+**题意**
 
+对给定的链表进行k次旋转。1次旋转是指，把当前链表的最后一个节点放在链表头的位置来。
 
+```
+Input: 0->1->2->NULL, k = 4
+Output: 2->0->1->NULL
+Explanation:
+rotate 1 steps to the right: 2->0->1->NULL
+rotate 2 steps to the right: 1->2->0->NULL
+rotate 3 steps to the right: 0->1->2->NULL
+rotate 4 steps to the right: 2->0->1->NULL
+```
 
+**解法**
+
+* 思路一
+
+每次旋转必须找到当前链表的最后一个节点，并且把它放在链表头来。【用2个指针来实现】
+
+这个旋转的操作是由规律的，假设链表的长度为`len`，每经过`len`次旋转得到的链表应该是和原始链表一样的。所以可以先求出链表的长度`len`，然后对链表进行`k%len`次旋转就行了【递归实现】。
