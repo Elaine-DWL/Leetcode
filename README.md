@@ -1523,4 +1523,4 @@ c++中的`bool nex_permutation(start, end)`函数其作用是，当当前序列�
    后来看了discuss，大神的思路真的好清奇啊QAQ我是怎么也想不出来这样的解法。。。
    可以参照下面的动图。从右往左，找到第一个减小的数在位置i，然后从该数往右看，找到离它最远的但是比它大的数，交换这两个数的位置，然后将位置i后面的序列从小到大重新排列。
 
-   ![31_Next_Permutation](.\image\31_Next_Permutation.gif)
+   ![31_Next_Permutation](./image/31_Next_Permutation.gif)
