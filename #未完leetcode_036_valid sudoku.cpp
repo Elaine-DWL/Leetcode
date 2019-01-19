@@ -12,3 +12,30 @@ bool isValidSudoku(char** board, int boardRowSize, int boardColSize) {
 			}
 	return 1;
 }
+
+// c++ 解决方案
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        vector<vector<int>> row(9, vector<int>(9,0));
+        vector<vector<int>> col(9, vector<int>(9,0));   //如果换成 int col[9][9]={0}  速度会更快
+        int sub[3][3][9]={0};
+        for(int i=0; i<9; i++){ // 第i+1行
+            for(int j=0; j<9; j++){ // 第j+1列
+                int t = board[i][j];
+                if(t!='.'){
+                    t = t-1-'0';
+                    if(row[i][t]!=0) return false;
+                    else row[i][t]++;
+                    if(col[j][t]!=0) return false;
+                    else col[j][t]++;
+                    if(sub[i/3][j/3][t]!=0) return false;
+                    else sub[i/3][j/3][t]++;
+                }
+            }
+        }
+        return true;
+    }
+};
+
+
