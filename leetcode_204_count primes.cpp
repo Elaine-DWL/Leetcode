@@ -79,16 +79,9 @@ public:
         for(int i=2; i<n; i++){// 判断i是不是素数
             if(mp[i]==1) continue;// 如果已经被标记过不是素数，则跳过
             // 当前数未被标记过，所以需要重新判断是否为素数
-            for(int k=i*i; k<n; k+=i) mp[k]=1;// 先标记该数的所有倍数都不是素数
-            for(int j=2; j*j<=i; j++){// 判断当前数是否为素数
-                if(i%j==0){// 这个数不是素数
-                    mp[i] = 1;// 标记不是素数
-                    continue;
-                }
-            }
+            for(int k=i+i; k<n; k+=i) mp[k]=1;// 标记该数的所有倍数都不是素数
             res++;
         }
-
         return res;
     }
 };
