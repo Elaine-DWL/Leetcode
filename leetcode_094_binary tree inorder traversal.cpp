@@ -49,3 +49,19 @@ public:
         return res;
     }
 };
+vector<int> inorderTraversal(TreeNode* root){
+	TreeNode* cur = root;
+	vector<int> res;
+	stack<int> s;
+	while(cur!=nullptr && !s.empty()){
+		while(cur!=nullptr){
+			s.push(cur);
+			cur = cur->left;
+		}
+		TreeNode* t = s.top();
+		s.pop();
+		res.push_back(t->val);
+		cur = cur->right;
+	}
+	return res;
+}
