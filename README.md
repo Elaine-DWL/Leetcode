@@ -1761,3 +1761,37 @@ Given n = 3, there are a total of 5 unique BST's:
   通过上面分析可以得到，$F[n] = 1*F[n-1] + F[1]*F[n-2] + F[2]*F[n-3] + ... + F[n-1]*1$，为了边长方便，可以令F[0]=1，即：
   $F[n] = F[0]*F[n-1] + F[1]*F[n-2] + F[2]*F[n-3] + ... + F[n-1]*F[0]$
 
+## 033. 在旋转数组中进行查找【logN，二分】
+
+**题意**
+
+假设有一个在某个点被旋转了的升序数组(比如说`[0,1,2,4,5,6,7]` 旋转后变成 `[4,5,6,7,0,1,2]` )，要求在O(logN)的时间复杂度内返回target的下标，如果未找到，则返回-1。
+
+```
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+```
+
+**解法**
+
+* 思路一【分治法+二分查找】
+
+初始化偏置`offset = 0`，一开始的思路时，在原数组中进行二分，`mid = (start+end)/2，`判断中间位置元素`nums[mid]==target`是否成立，是的话直接就返回`offset = offset + mid`即为target的下标。如果不成立的话：
+
+1. nums左半部分有序(`nums[start]<nums[mid]`)，且target在左半部分(`target>=nums[start] && target<=nums[end]`):
+
+   ​	在左半部分left进行二分查找，如果没找到target，则返回-1。如果能找到target，则返回`offset+此时target相对left首位的偏置`；
+
+2. nums右半部分有序(`nums[mid]<nums[end]`)，且target在右半部分(`target>=nums[mid] && target<=nums[end]`):
+
+   ​	在右半部分right进行二分查找，如果没找到target，则返回-1。如果能找到target，则返回`offset+左半部分的长度+此时target相对right首位的偏置`；
+
+3. nums左半部分有序(`nums[start]<nums[mid]`)，但target不在左半部分：
+
+   ​	offset置为`offset+左半部分的长度`；对nums的右半部分重复上述操作。
+
+4. nums右半部分有序，但target不在右半部分：
+
+   ​	offset不变，对nums的左半部分重复上述操作。
+
+这是自己最初的思路，实现起来还是一直出bug，最后调出来程序的效率是4ms，beat 100%。后来看了讨论区还是有更简单的实现方法。
