@@ -65,24 +65,25 @@ public:
 // 思路四 分治法
 class Solution {
 public:
+    // 分治法实现
     vector<int> searchRange(vector<int>& nums, int target) {
-        if (nums.empty()) {
-            return {-1, -1};
-        }
-        return search(nums, target, 0, nums.size() - 1);
+        if(nums.size()==0) return {-1, -1};
+        return search(nums, 0, nums.size()-1, target);
     }
-private:
-    vector<int> search(vector<int>& nums, int target, int l, int r) {
-        if (nums[l] == target && nums[r] == target) {
-            return {l, r};
-        }
-        if (nums[l] <= target && nums[r] >= target) {
-            int m = l + (r - l) / 2;
-            vector<int> left = search(nums, target, l, m), right = search(nums, target, m + 1, r);
-            if (left[0] >= 0 && right[0] >= 0) {
-                return {left[0], right[1]};
+    vector<int> search(vector<int>& nums, int l, int r, int target){
+        if(l>r) return {-1, -1};
+        if(nums[l]==target && nums[r]==target) return {l, r};
+        if(nums[l]<=target && target<=nums[r]){
+            int m = (l+r)/2;
+            if(nums[m] == target){
+                vector<int> left = search(nums, l, m-1, target); //找到左半部分的区间
+                vector<int> right = search(nums, m+1, r, target); //找到右半部分的区间
+                int i=left[0]!=-1?left[0]:m; //如果左半部分的区间存在，则取其最小下标
+                int j=right[1]!=-1?right[1]:m; //如果右半部分的区间存在，则取其最大下标
+                return {i, j};
             }
-            return left[0] == -1 ? right : left;
+            if(nums[m] < target) return search(nums, m+1, r, target);
+            else return search(nums, l, m-1, target);
         }
         return {-1, -1};
     }
